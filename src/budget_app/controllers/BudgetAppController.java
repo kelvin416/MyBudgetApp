@@ -10,7 +10,6 @@ public class BudgetAppController {
     public static void main(String[] args) {
         User user = new User();
         BudgetModel budgetModel = new BudgetModel();
-        BudgetAllocation buget = new BudgetAllocation();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to Kelotich Budgeting App");
         System.out.println("Are you a new user? (Y for Yes, N for No)");
@@ -18,7 +17,6 @@ public class BudgetAppController {
 
         if (response.toUpperCase().equals("Y")){
             user.register();
-            budgetModel.createUser();
         } else if (response.toUpperCase().equals("N")) {
             //log into budget allocation
             user.login();
