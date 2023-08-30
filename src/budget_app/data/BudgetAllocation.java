@@ -8,6 +8,8 @@ public class BudgetAllocation {
     private double transport;
     private double insurance;
 
+    double totalBudget = 0;
+
     public BudgetAllocation() {
     }
 
@@ -17,6 +19,22 @@ public class BudgetAllocation {
         this.basicUtilities = basicUtilities;
         this.transport = transport;
         this.insurance = insurance;
+    }
+
+    void allocateGroceries(double groceries){
+        totalBudget += groceries;
+    }
+    void allocateHousing(double housing){
+        totalBudget += housing;
+    }
+    void allocateUtilities(double basicUtilities){
+        totalBudget += basicUtilities;
+    }
+    void allocateTransport(double transport){
+        totalBudget += transport;
+    }
+    void allocateInsurance(double insurance){
+        totalBudget += insurance;
     }
 
     public double getGroceries() {
