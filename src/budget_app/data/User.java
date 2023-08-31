@@ -24,8 +24,10 @@ public class User {
 
     public void register(){
         System.out.println("Please register here: ");
-
+        //
         budgetModel.createUser();
+
+        budgetModel.viewProfile();
 
         allocateBudget();
 
@@ -34,8 +36,12 @@ public class User {
     public void login(){
         System.out.println("Enter your name please: ");
         String uName = scanner.next();
-        if (uName.toUpperCase().equals(getName())){
+        System.out.println("Welcome back: " + uName);
+        //a condition to determine if the user is there using UserName
+
+        if (uName.toLowerCase().equals("kelvin")) {
             System.out.println("Welcome back");
+            budgetModel.viewProfile();
             System.out.println("Your budget allocation is: ");
             //
         } else {
@@ -45,6 +51,7 @@ public class User {
     }
 
     public void allocateBudget(){
+
         budgetModel.createBudget();
     }
 

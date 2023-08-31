@@ -16,9 +16,10 @@ public class BudgetAppController {
         String response = scanner.next();
 
         if (response.toUpperCase().equals("Y")){
+            //register method for new users.
             user.register();
         } else if (response.toUpperCase().equals("N")) {
-            //log into budget allocation
+            //login method for registered users
             user.login();
         } else {
             System.out.println("Type in the correct response: ");
