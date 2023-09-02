@@ -19,6 +19,7 @@ public class BudgetModel {
             + "user=root&password=coddingnomads"
             + "&useSSL=false&allowPublicKeyRetrieval=true";
 
+    //method to create a new user.
     public static void createUser(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -39,12 +40,13 @@ public class BudgetModel {
         }
     }
 
+    //method to create a new budget for a user.
     public static void createBudget(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
             preparedStatement = connection.prepareStatement("INSERT INTO MyBudgetApp.BudgetedItems" +
-                    "(Groceries, Housing, BasicUtilities, Transport, Insurance) VALUES (?, ?, ?, ?, ?)");
+                    "(UserId, Groceries, Housing, BasicUtilities, Transport, Insurance) VALUES (?, ?, ?, ?, ?, ?)");
             System.out.print("Use your user Id here: ");
             preparedStatement.setDouble(1, scanner.nextInt());
             System.out.println("Budget allocation for groceries: ");
@@ -62,6 +64,7 @@ public class BudgetModel {
             preparedStatement.setDouble(4, budgetAllocation.getBasicUtilities());
             preparedStatement.setDouble(5, budgetAllocation.getTransport());
             preparedStatement.setDouble(6, budgetAllocation.getInsurance());
+            preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -69,11 +72,39 @@ public class BudgetModel {
         }
     }
 
+    public static void viewName(){
+        System.out.println("Enter your name please: ");
+        String uName = scanner.next();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(connectionString);
+            preparedStatement = connection.prepareStatement("SELECT UserName FROM MyBudgetApp.User WHERE Username = ?");
+            preparedStatement.setString(1, uName);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                String userName = resultSet.getString("UserName");
+                //a condition to determine if the user is there using UserName
+                if (uName.equals(userName)){
+                    System.out.println("Welcome back: " + uName);
+                    user.viewBudget();
+                } else{
+                    //if user not available, redirect back to login page.
+                    System.out.println("Incorrect username, login again.");
+                    user.login();
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
     public static void viewProfile(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
-            preparedStatement = connection.prepareStatement("SELECT * FROM MyBudgetApp.User");
+            preparedStatement = connection.prepareStatement("SELECT * FROM MyBudgetApp.User ORDER BY DateRegistered DESC LIMIT 1");
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 int userId = resultSet.getInt("UserId");
@@ -95,24 +126,34 @@ public class BudgetModel {
     //Method to query budgeted items and there prices in the database
 
     public static void viewItems(){
+        System.out.print("Please enter your user id: ");
+        int userId = scanner.nextInt();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
-            preparedStatement = connection.prepareStatement("SELECT * FROM MyBudgetApp.BudgetedItems");
+            preparedStatement = connection.prepareStatement("SELECT * FROM MyBudgetApp.BudgetedItems WHERE UserId = ?");
+            preparedStatement.setInt(1, userId);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 //using a while loop to go through all the items within the BudgetedItems table
+                int UserId = resultSet.getInt("UserId");
                 double groceries = resultSet.getDouble("Groceries");
                 double housing = resultSet.getDouble("Housing");
                 double basicUtilities  = resultSet.getDouble("BasicUtilities");
                 double transport = resultSet.getDouble("Transport");
                 double insurance = resultSet.getDouble("Insurance");
 
-                System.out.println("Your budget for groceries is: " + groceries);
-                System.out.println("Your budget for housing is: " + housing);
-                System.out.println("Your budget for basic utilities is: " + basicUtilities);
-                System.out.println("Your budget for transport is: " + transport);
-                System.out.println("Your budget for insurance is: " + insurance);
+                if (UserId == userId){
+                    System.out.println("Your budget for groceries is: " + groceries);
+                    System.out.println("Your budget for housing is: " + housing);
+                    System.out.println("Your budget for basic utilities is: " + basicUtilities);
+                    System.out.println("Your budget for transport is: " + transport);
+                    System.out.println("Your budget for insurance is: " + insurance);
+                } else {
+                    System.out.println("Enter correct userId");
+                    user.viewBudget();
+
+                }
             }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);

@@ -6,12 +6,13 @@ import java.util.Scanner;
 
 public class User {
     BudgetAllocation budgetAllocation = new BudgetAllocation();
-    BudgetModel budgetModel = new BudgetModel();
+    static BudgetModel budgetModel = new BudgetModel();
     private String name;
     private int userId;
     private double amount;
 
     Scanner scanner = new Scanner(System.in);
+
 
     public User() {
     }
@@ -24,30 +25,23 @@ public class User {
 
     public void register(){
         System.out.println("Please register here: ");
-        //
+        //budget.createUser method will save the data in MyBudgetApp DB
         budgetModel.createUser();
-
-        budgetModel.viewProfile();
+        //view user
+        viewUser();
 
         allocateBudget();
 
     }
 
     public void login(){
-        System.out.println("Enter your name please: ");
-        String uName = scanner.next();
-        System.out.println("Welcome back: " + uName);
-        //a condition to determine if the user is there using UserName
+        budgetModel.viewName();
 
-        if (uName.toLowerCase().equals("kelvin")) {
-            System.out.println("Welcome back");
-            budgetModel.viewProfile();
-            System.out.println("Your budget allocation is: ");
-            //
-        } else {
-            System.out.println("Incorrect username, login again.");
-            login();
-        }
+    }
+
+    public static void viewUser(){
+
+        budgetModel.viewProfile();
     }
 
     public void allocateBudget(){
@@ -55,7 +49,9 @@ public class User {
         budgetModel.createBudget();
     }
 
-    public void viewBudget(){}
+    public void viewBudget(){
+        budgetModel.viewItems();
+    }
 
     public String getName() {
         return name;
