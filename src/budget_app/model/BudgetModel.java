@@ -49,15 +49,15 @@ public class BudgetModel {
                     "(UserId, Groceries, Housing, BasicUtilities, Transport, Insurance) VALUES (?, ?, ?, ?, ?, ?)");
             System.out.print("Use your user Id here: ");
             preparedStatement.setDouble(1, scanner.nextInt());
-            System.out.println("Budget allocation for groceries: ");
+            System.out.print("Budget allocation for groceries: ");
             budgetAllocation.setGroceries(scanner.nextDouble());
-            System.out.println("Budget allocation for housing: ");
+            System.out.print("Budget allocation for housing: ");
             budgetAllocation.setHousing(scanner.nextDouble());
-            System.out.println("Budget allocation for basic utilities(internet, water, electricity): ");
+            System.out.print("Budget allocation for basic utilities(internet, water, electricity): ");
             budgetAllocation.setBasicUtilities(scanner.nextDouble());
-            System.out.println("Budget allocation for transport: ");
+            System.out.print("Budget allocation for transport: ");
             budgetAllocation.setTransport(scanner.nextDouble());
-            System.out.println("Budget allocation for insurance: ");
+            System.out.print("Budget allocation for insurance: ");
             budgetAllocation.setInsurance(scanner.nextDouble());
             preparedStatement.setDouble(2, budgetAllocation.getGroceries());
             preparedStatement.setDouble(3, budgetAllocation.getHousing());
@@ -78,15 +78,17 @@ public class BudgetModel {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
-            preparedStatement = connection.prepareStatement("SELECT UserName FROM MyBudgetApp.User WHERE Username = ?");
+            preparedStatement = connection.prepareStatement("SELECT UserId, UserName FROM MyBudgetApp.User WHERE Username = ?");
             preparedStatement.setString(1, uName);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 String userName = resultSet.getString("UserName");
+                int userId = resultSet.getInt("UserId");
+                System.out.println(userId);
                 //a condition to determine if the user is there using UserName
                 if (uName.equals(userName)){
                     System.out.println("Welcome back: " + uName);
-                    user.viewBudget();
+                    user.viewBudget(userId);
                 } else{
                     //if user not available, redirect back to login page.
                     System.out.println("Incorrect username, login again.");
@@ -113,7 +115,7 @@ public class BudgetModel {
 
                 System.out.println("Your userId is: " + userId);
                 System.out.println("Your user name is: " + userName);
-                System.out.println("Your balance is: " + amount);
+                System.out.println("Your budget amount is: " + amount);
 
             }
         } catch (ClassNotFoundException e) {
@@ -125,7 +127,7 @@ public class BudgetModel {
 
     //Method to query budgeted items and there prices in the database
 
-    public static void viewItems(){
+    public static void viewItems(int Uid){
         System.out.print("Please enter your user id: ");
         int userId = scanner.nextInt();
         try {
@@ -133,17 +135,18 @@ public class BudgetModel {
             connection = DriverManager.getConnection(connectionString);
             preparedStatement = connection.prepareStatement("SELECT * FROM MyBudgetApp.BudgetedItems WHERE UserId = ?");
             preparedStatement.setInt(1, userId);
+            preparedStatement.execute();
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 //using a while loop to go through all the items within the BudgetedItems table
-                int UserId = resultSet.getInt("UserId");
+//                int UserId = resultSet.getInt("UserId");
                 double groceries = resultSet.getDouble("Groceries");
                 double housing = resultSet.getDouble("Housing");
                 double basicUtilities  = resultSet.getDouble("BasicUtilities");
                 double transport = resultSet.getDouble("Transport");
                 double insurance = resultSet.getDouble("Insurance");
 
-                if (UserId == userId){
+                if (Uid == userId){
                     System.out.println("Your budget for groceries is: " + groceries);
                     System.out.println("Your budget for housing is: " + housing);
                     System.out.println("Your budget for basic utilities is: " + basicUtilities);
@@ -151,7 +154,7 @@ public class BudgetModel {
                     System.out.println("Your budget for insurance is: " + insurance);
                 } else {
                     System.out.println("Enter correct userId");
-                    user.viewBudget();
+                    user.login();
 
                 }
             }

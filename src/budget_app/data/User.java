@@ -49,8 +49,8 @@ public class User {
         budgetModel.createBudget();
     }
 
-    public void viewBudget(){
-        budgetModel.viewItems();
+    public void viewBudget(int userId){
+        budgetModel.viewItems(userId);
     }
 
     public String getName() {
