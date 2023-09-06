@@ -4,6 +4,7 @@ import budget_app.data.BudgetAllocation;
 import budget_app.data.User;
 
 import java.sql.*;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BudgetModel {
@@ -73,7 +74,7 @@ public class BudgetModel {
     }
 
     public static void viewName(){
-        System.out.println("Enter your name please: ");
+        System.out.println("Enter your name please as registered: ");
         String uName = scanner.next();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -84,12 +85,11 @@ public class BudgetModel {
             while (resultSet.next()){
                 String userName = resultSet.getString("UserName");
                 int userId = resultSet.getInt("UserId");
-                System.out.println(userId);
                 //a condition to determine if the user is there using UserName
-                if (uName.equals(userName)){
-                    System.out.println("Welcome back: " + uName);
+                if (uName.equalsIgnoreCase(userName)){
+                    System.out.println("Welcome back " + uName);
                     user.viewBudget(userId);
-                } else{
+                } else {
                     //if user not available, redirect back to login page.
                     System.out.println("Incorrect username, login again.");
                     user.login();
@@ -137,44 +137,67 @@ public class BudgetModel {
             preparedStatement.setInt(1, userId);
             preparedStatement.execute();
             resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                //using a while loop to go through all the items within the BudgetedItems table
+                while (resultSet.next()) {
+                    //using a while loop to go through all the items within the BudgetedItems table
 //                int UserId = resultSet.getInt("UserId");
-                double groceries = resultSet.getDouble("Groceries");
-                double housing = resultSet.getDouble("Housing");
-                double basicUtilities  = resultSet.getDouble("BasicUtilities");
-                double transport = resultSet.getDouble("Transport");
-                double insurance = resultSet.getDouble("Insurance");
+                    System.out.println(userId);
+                    System.out.println(Uid);
+                    if (Uid == userId) {
+                        double groceries = resultSet.getDouble("Groceries");
+                        double housing = resultSet.getDouble("Housing");
+                        double basicUtilities = resultSet.getDouble("BasicUtilities");
+                        double transport = resultSet.getDouble("Transport");
+                        double insurance = resultSet.getDouble("Insurance");
 
-                if (Uid == userId){
-                    System.out.println("Your budget for groceries is: " + groceries);
-                    System.out.println("Your budget for housing is: " + housing);
-                    System.out.println("Your budget for basic utilities is: " + basicUtilities);
-                    System.out.println("Your budget for transport is: " + transport);
-                    System.out.println("Your budget for insurance is: " + insurance);
-                } else {
-                    System.out.println("Enter correct userId");
-                    user.login();
+                        System.out.println("Your budget for groceries is: " + groceries);
+                        System.out.println("Your budget for housing is: " + housing);
+                        System.out.println("Your budget for basic utilities is: " + basicUtilities);
+                        System.out.println("Your budget for transport is: " + transport);
+                        System.out.println("Your budget for insurance is: " + insurance);
+                    } else {
+                        System.out.println("Enter correct userId or you don't have budget allocated.");
+                        System.out.println("Would you like to allocate your budget(Y for Yes and N for NO)");
+                        String response2 = scanner.next();
+                        if (response2.toUpperCase().equals("Y")){
+                            user.allocateBudget();
+                        } else if (response2.toUpperCase().equals("N")) {
+                            System.out.println("Would you like to go back to login page or exit?(type: (login or exit))");
+                            String response3 = scanner.next();
+                            if (response3.toUpperCase().equals("LOGIN")){
+                                user.login();
+                            } else {
+                                return;
+                            }
+                        } else {
+                            user.viewUser();
+                        }
+                    }
 
                 }
-            }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        }  catch (ClassNotFoundException ex) {
+            throw new RuntimeException(ex);
+        } catch (InputMismatchException e){
+            System.out.println("Please enter a number");
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
     //method to update user information like name and salary
-    public static void updateUser(){
+    public static void updateUser(String uName){
+        System.out.println("How much would you like your updated budget to be: ");
+        double updateAmount = scanner.nextDouble();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
             preparedStatement = connection.prepareStatement("UPDATE MyBudgetApp.User" +
                     "SET Amount = ? WHERE UserName = ?");
-            preparedStatement.setDouble(1, scanner.nextDouble());
-            preparedStatement.setString(2, scanner.next());
+            preparedStatement.setDouble(1, updateAmount);
+            preparedStatement.setString(2, uName);
             preparedStatement.execute();
+
+            System.out.println("Your Updated Budget Allocation is: ");
+            viewProfile();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {

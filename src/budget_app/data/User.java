@@ -34,8 +34,16 @@ public class User {
 
     }
 
+    //using the login method
     public void login(){
         budgetModel.viewName();
+        System.out.println("Update your budget allocation? (Y for Yes or N for NO)");
+        String update = scanner.next();
+        if (update.toUpperCase().equals("Y")){
+            updateInfo(getName());
+        } else {
+            return;
+        }
 
     }
 
@@ -51,6 +59,14 @@ public class User {
 
     public void viewBudget(int userId){
         budgetModel.viewItems(userId);
+    }
+
+    public static void updateInfo(String name){
+        budgetModel.updateUser(name);
+    }
+
+    public static void updateAllocation(){
+        
     }
 
     public String getName() {

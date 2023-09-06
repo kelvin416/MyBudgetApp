@@ -11,7 +11,7 @@ public class BudgetAppController {
         User user = new User();
         BudgetModel budgetModel = new BudgetModel();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to Kelotich Budgeting App");
+        System.out.println("Welcome to Keltich Budgeting App");
         System.out.print("Are you a new user? (Y for Yes, N for No): ");
         String response = scanner.next();
 
