@@ -184,20 +184,27 @@ public class BudgetModel {
     }
 
     //method to update user information like name and salary
-    public static void updateUser(String uName){
+    public static void updateUser(int Uid){
+        System.out.println("What is your user id: ");
+        int userId = scanner.nextInt();
         System.out.println("How much would you like your updated budget to be: ");
         double updateAmount = scanner.nextDouble();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
-            preparedStatement = connection.prepareStatement("UPDATE MyBudgetApp.User" +
-                    "SET Amount = ? WHERE UserName = ?");
+            preparedStatement = connection.prepareStatement("UPDATE MyBudgetApp.User SET Amount = ? WHERE UserId = ?");
             preparedStatement.setDouble(1, updateAmount);
-            preparedStatement.setString(2, uName);
-            preparedStatement.execute();
+            preparedStatement.setInt(2, userId);
+            if (user.getUserId() == userId){
+                preparedStatement.execute();
 
-            System.out.println("Your Updated Budget Allocation is: ");
-            viewProfile();
+                System.out.println("Your Updated Budget Allocation is: ");
+                viewProfile();
+            } else {
+                System.out.println("Failed to update your budget allocation.");
+                viewProfile();
+            }
+
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {

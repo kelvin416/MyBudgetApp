@@ -40,7 +40,7 @@ public class User {
         System.out.println("Update your budget allocation? (Y for Yes or N for NO)");
         String update = scanner.next();
         if (update.toUpperCase().equals("Y")){
-            updateInfo(getName());
+            updateInfo(userId);
         } else {
             return;
         }
@@ -61,12 +61,12 @@ public class User {
         budgetModel.viewItems(userId);
     }
 
-    public static void updateInfo(String name){
-        budgetModel.updateUser(name);
+    public static void updateInfo(int userId){
+        budgetModel.updateUser(userId);
     }
 
     public static void updateAllocation(){
-        
+
     }
 
     public String getName() {
