@@ -192,10 +192,11 @@ public class BudgetModel {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
-            preparedStatement = connection.prepareStatement("UPDATE MyBudgetApp.User SET Amount = ? WHERE UserId = ?");
+            preparedStatement = connection.prepareStatement("UPDATE MyBudgetApp.User SET Amount = ? WHERE ( UserId = ? )");
             preparedStatement.setDouble(1, updateAmount);
-            preparedStatement.setInt(2, userId);
-            if (user.getUserId() == userId){
+            preparedStatement.setInt(2, Uid);
+            if (Uid == userId){
+                System.out.println(Uid);
                 preparedStatement.execute();
 
                 System.out.println("Your Updated Budget Allocation is: ");
@@ -211,12 +212,24 @@ public class BudgetModel {
             throw new RuntimeException(e);
         }
     }
-
-    //Method to update items budget price
-    public static void updateItems(){}
-
     //method to delete user
-    public static void deleteUser(){}
+    public static void deleteUser(){
+        System.out.println("Enter your user Id to confirm deletion: ");
+        int userId = scanner.nextInt();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(connectionString);
+            preparedStatement = connection.prepareStatement("DELETE FROM MyBudgetApp.User WHERE UserId = ?");
+            preparedStatement.setInt(1, userId);
+            preparedStatement.execute();
+            System.out.println("Account deletion was a success.");
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     //method to delete items
     public static void deleteItems(){}

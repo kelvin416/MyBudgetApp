@@ -24,7 +24,15 @@ public class BudgetAppController {
         } else {
             System.out.println("Type in the correct response: ");
         }
-        System.out.println();
+        //Here you can delete your account. And it will also delete data in budget allocated.
+        System.out.println("Would you like to delete your account?");
+        System.out.println("YES/NO");
+        String delete = scanner.next();
+        if (delete.equalsIgnoreCase("YES")){
+            budgetModel.deleteUser();
+        } else if(delete.equalsIgnoreCase("NO")) {
+            user.login();
+        }
         scanner.close();
     }
 }
