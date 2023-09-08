@@ -23,6 +23,10 @@ public class User {
         this.amount = amount;
     }
 
+    public static void homePage(){
+        System.out.println("Kelotich Budget App");
+    }
+
     public void register(){
         System.out.println("Please register here: ");
         //budget.createUser method will save the data in MyBudgetApp DB
@@ -58,7 +62,17 @@ public class User {
     }
 
     public void viewBudget(int userId){
+        System.out.println("Hello here is your budgeted items.");
         budgetModel.viewItems(userId);
+
+        System.out.println("Delete budgeted items?");
+        System.out.print("YES/NO: ");
+        String response = scanner.next();
+        if (response.equalsIgnoreCase("YES")){
+            budgetModel.deleteBudgetAllocation();
+        } else {
+            homePage();
+        }
     }
 
     public static void updateInfo(int userId){

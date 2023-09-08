@@ -232,5 +232,19 @@ public class BudgetModel {
     }
 
     //method to delete items
-    public static void deleteItems(){}
+    public static void deleteBudgetAllocation(){
+        System.out.println("Enter your user id to delete your budget allocation: ");
+        int userId = scanner.nextInt();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(connectionString);
+            preparedStatement = connection.prepareStatement("DELETE FROM MyBudgetApp.BudgetedItems WHERE UserId = ?");
+            preparedStatement.setInt(1, userId);
+            preparedStatement.execute();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
