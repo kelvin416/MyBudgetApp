@@ -154,9 +154,9 @@ public class BudgetModel {
                         System.out.println("Your budget for basic utilities is: " + basicUtilities);
                         System.out.println("Your budget for transport is: " + transport);
                         System.out.println("Your budget for insurance is: " + insurance);
-                    } else {
+                    } else if(Uid != userId) {
                         System.out.println("Enter correct userId or you don't have budget allocated.");
-                        System.out.println("Would you like to allocate your budget(Y for Yes and N for NO)");
+                        System.out.print("Would you like to allocate your budget(Y for Yes and N for NO): ");
                         String response2 = scanner.next();
                         if (response2.toUpperCase().equals("Y")){
                             user.allocateBudget();

@@ -41,7 +41,7 @@ public class User {
     //using the login method
     public void login(){
         budgetModel.viewName();
-        System.out.println("Update your budget allocation? (Y for Yes or N for NO)");
+        System.out.print("Update your budget allocation? (Y for Yes or N for NO): ");
         String update = scanner.next();
         if (update.toUpperCase().equals("Y")){
             updateInfo(userId);
@@ -66,9 +66,9 @@ public class User {
         budgetModel.viewItems(userId);
 
         System.out.println("Delete budgeted items?");
-        System.out.print("YES/NO: ");
+        System.out.print("(Y for Yes, N for No): ");
         String response = scanner.next();
-        if (response.equalsIgnoreCase("YES")){
+        if (response.equalsIgnoreCase("Y")){
             budgetModel.deleteBudgetAllocation();
         } else {
             homePage();
