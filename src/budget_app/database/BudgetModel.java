@@ -34,6 +34,8 @@ public class BudgetModel {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setDouble(2, user.getAmount());
             preparedStatement.execute();
+        } catch (InputMismatchException e){
+            System.out.println("Please enter a number");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
@@ -66,6 +68,8 @@ public class BudgetModel {
             preparedStatement.setDouble(5, budgetAllocation.getTransport());
             preparedStatement.setDouble(6, budgetAllocation.getInsurance());
             preparedStatement.execute();
+        } catch (InputMismatchException e){
+            System.out.println("Please enter a number");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -95,6 +99,8 @@ public class BudgetModel {
                     user.login();
                 }
             }
+        } catch (InputMismatchException e){
+            System.out.println("Please enter a number");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
@@ -118,6 +124,8 @@ public class BudgetModel {
                 System.out.println("Your budget amount is: " + amount);
 
             }
+        } catch (InputMismatchException e){
+            System.out.println("Please enter a number");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
@@ -208,7 +216,10 @@ public class BudgetModel {
                 viewProfile();
             }
 
-        } catch (ClassNotFoundException e) {
+        } catch (InputMismatchException e){
+            System.out.println("Please enter a number");
+        }
+        catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
