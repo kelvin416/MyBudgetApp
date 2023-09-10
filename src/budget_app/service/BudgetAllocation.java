@@ -1,4 +1,4 @@
-package budget_app.data;
+package budget_app.service;
 
 public class BudgetAllocation {
     private double groceries;

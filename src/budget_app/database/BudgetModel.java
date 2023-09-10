@@ -1,7 +1,7 @@
-package budget_app.model;
+package budget_app.database;
 
-import budget_app.data.BudgetAllocation;
-import budget_app.data.User;
+import budget_app.service.BudgetAllocation;
+import budget_app.service.User;
 
 import java.sql.*;
 import java.util.InputMismatchException;
@@ -130,48 +130,50 @@ public class BudgetModel {
     public static void viewItems(int Uid){
         System.out.print("Please enter your user id: ");
         int userId = scanner.nextInt();
+        System.out.println(userId);
+        System.out.println(Uid);
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
             preparedStatement = connection.prepareStatement("SELECT * FROM MyBudgetApp.BudgetedItems WHERE UserId = ?");
             preparedStatement.setInt(1, userId);
-            preparedStatement.execute();
             resultSet = preparedStatement.executeQuery();
+            if(Uid != userId) {
+                System.out.println("Enter correct userId or you don't have budget allocated.");
+                System.out.print("Would you like to allocate your budget(Y for Yes and N for NO): ");
+                String response2 = scanner.next();
+                if (response2.toUpperCase().equals("Y")){
+                    user.allocateBudget();
+                } else if (response2.toUpperCase().equals("N")) {
+                    System.out.println("Would you like to go back to login page or exit?(type: (login or exit))");
+                    System.out.println("Hit CRTL-D to exit the app.");
+                    String response3 = scanner.next();
+                    if (response3.toUpperCase().equals("LOGIN")){
+                        user.login();
+                    }
+                } else {
+                    user.viewUser();
+                }
+            }
+            if (Uid == userId){
                 while (resultSet.next()) {
                     //using a while loop to go through all the items within the BudgetedItems table
 //                int UserId = resultSet.getInt("UserId");
-                    System.out.println(userId);
-                    System.out.println(Uid);
-                    if (Uid == userId) {
-                        double groceries = resultSet.getDouble("Groceries");
-                        double housing = resultSet.getDouble("Housing");
-                        double basicUtilities = resultSet.getDouble("BasicUtilities");
-                        double transport = resultSet.getDouble("Transport");
-                        double insurance = resultSet.getDouble("Insurance");
+//                    if (Uid == userId) {
+                    double groceries = resultSet.getDouble("Groceries");
+                    double housing = resultSet.getDouble("Housing");
+                    double basicUtilities = resultSet.getDouble("BasicUtilities");
+                    double transport = resultSet.getDouble("Transport");
+                    double insurance = resultSet.getDouble("Insurance");
 
-                        System.out.println("Your budget for groceries is: " + groceries);
-                        System.out.println("Your budget for housing is: " + housing);
-                        System.out.println("Your budget for basic utilities is: " + basicUtilities);
-                        System.out.println("Your budget for transport is: " + transport);
-                        System.out.println("Your budget for insurance is: " + insurance);
-                    } else if(Uid != userId) {
-                        System.out.println("Enter correct userId or you don't have budget allocated.");
-                        System.out.print("Would you like to allocate your budget(Y for Yes and N for NO): ");
-                        String response2 = scanner.next();
-                        if (response2.toUpperCase().equals("Y")){
-                            user.allocateBudget();
-                        } else if (response2.toUpperCase().equals("N")) {
-                            System.out.println("Would you like to go back to login page or exit?(type: (login or exit))");
-                            String response3 = scanner.next();
-                            if (response3.toUpperCase().equals("LOGIN")){
-                                user.login();
-                            } else {
-                                return;
-                            }
-                        } else {
-                            user.viewUser();
-                        }
-                    }
+                    System.out.println("Hello here is your budgeted items.");
+                    System.out.println("Your budget for groceries is: " + groceries);
+                    System.out.println("Your budget for housing is: " + housing);
+                    System.out.println("Your budget for basic utilities is: " + basicUtilities);
+                    System.out.println("Your budget for transport is: " + transport);
+                    System.out.println("Your budget for insurance is: " + insurance);
+//                    }
+                }
 
                 }
         }  catch (ClassNotFoundException ex) {

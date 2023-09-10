@@ -1,6 +1,6 @@
-package budget_app.data;
+package budget_app.service;
 
-import budget_app.model.BudgetModel;
+import budget_app.database.BudgetModel;
 
 import java.util.Scanner;
 
@@ -62,7 +62,7 @@ public class User {
     }
 
     public void viewBudget(int userId){
-        System.out.println("Hello here is your budgeted items.");
+
         budgetModel.viewItems(userId);
 
         System.out.println("Delete budgeted items?");
@@ -79,9 +79,6 @@ public class User {
         budgetModel.updateUser(userId);
     }
 
-    public static void updateAllocation(){
-
-    }
 
     public String getName() {
         return name;

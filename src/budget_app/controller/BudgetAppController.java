@@ -1,8 +1,7 @@
-package budget_app.controllers;
+package budget_app.controller;
 
-import budget_app.data.BudgetAllocation;
-import budget_app.data.User;
-import budget_app.model.BudgetModel;
+import budget_app.service.User;
+import budget_app.database.BudgetModel;
 
 import java.util.Scanner;
 
