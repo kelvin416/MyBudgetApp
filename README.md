@@ -1,7 +1,12 @@
 # MyBudgetApp
-Welcome to MyBudgetApp, a simple yet powerful budget management application designed to help users track their expenses, manage their finances, and achieve their financial goals effectively.
 
-Overview
+### Welcome to MyBudgetApp, a simple yet powerful budget management application designed to help users track their expenses, manage their finances, and achieve their financial goals ### effectively.
+
+## Overview
+### MyBudgetApp is built with the goal of providing users with an intuitive interface to input their expenses, categorize spending, and generate insightful reports. 
+
+## Key Features
+### **Expense Tracking**: 
 
 ## The app is used by the user to create allocation of items to be budgeted.
 ### The user is able to create a new account or login.
