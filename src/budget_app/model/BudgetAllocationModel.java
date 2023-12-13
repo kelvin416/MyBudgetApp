@@ -1,16 +1,16 @@
-package budget_app.service;
+package budget_app.model;
 
-public class BudgetAllocation {
+public class BudgetAllocationModel {
     private double groceries;
     //housing will contain internet electricity, water and other maintenance;
     private double housing;
     private double basicUtilities;
     private double transport;
     private double insurance;
-    public BudgetAllocation() {
+    public BudgetAllocationModel() {
     }
 
-    public BudgetAllocation(double groceries, double housing, double basicUtilities, double transport, double insurance) {
+    public BudgetAllocationModel(double groceries, double housing, double basicUtilities, double transport, double insurance) {
         this.groceries = groceries;
         this.housing = housing;
         this.basicUtilities = basicUtilities;
