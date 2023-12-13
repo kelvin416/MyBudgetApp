@@ -60,6 +60,8 @@ public class BudgetMapper extends DatabaseParent {
     public void viewBudgetItems(UserModel user){
         boolean budgetInfo = false;
 
+        System.out.println("\n************** USER BUDGET INFO ***************");
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);

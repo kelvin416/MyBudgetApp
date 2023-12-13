@@ -73,6 +73,8 @@ public class UserMapper extends DatabaseParent {
 
 
             }
+            preparedStatement.close();
+            connection.close();
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }

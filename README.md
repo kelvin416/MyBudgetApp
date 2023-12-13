@@ -6,3 +6,4 @@
 ### Registered users with budget allocations are able to delete their budget allocations or add new ones.
 ### Also registered users can delete there account if they wished to.
 ### Deleting an account will delete their allocations but deleting budget allocations will not delete the user's account.
+

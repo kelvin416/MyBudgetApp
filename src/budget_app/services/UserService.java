@@ -40,6 +40,7 @@ public class UserService {
     }
 
     public UserModel viewUser(UserModel user) throws Exception {
+
         UserModel updatedUser = userMapper.refreshProfileInfo(user);
 
         System.out.println("\n************** USER PROFILE INFO ***************");
@@ -47,7 +48,6 @@ public class UserService {
         System.out.println("Your user name is: " + updatedUser.getName());
         System.out.println("Your budget amount is: " + updatedUser.getTotalBudgetAmount());
 
-        System.out.println("\n************** USER BUDGET INFO ***************");
         budgetMapper.viewBudgetItems(user);
 
         return updatedUser;
