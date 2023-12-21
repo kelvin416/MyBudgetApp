@@ -18,7 +18,7 @@ public class BudgetMapper extends DatabaseParent {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
-            preparedStatement = connection.prepareStatement("INSERT INTO MyBudgetApp.BudgetedItems" +
+            preparedStatement = connection.prepareStatement("INSERT INTO My_BudgetApp.BudgetedItems" +
                     "(UserId, Groceries, Housing, BasicUtilities, Transport, Insurance) VALUES (?, ?, ?, ?, ?, ?)");
             //System.out.print("Use your user Id here: ");
 
@@ -65,9 +65,11 @@ public class BudgetMapper extends DatabaseParent {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
-            preparedStatement = connection.prepareStatement("SELECT * FROM MyBudgetApp.BudgetedItems WHERE UserId = ?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM My_BudgetApp.BudgetedItems WHERE UserId = ?");
             preparedStatement.setInt(1, user.getUserId());
             resultSet = preparedStatement.executeQuery();
+            //place if statement when there is no budget item?
+
 
             while (resultSet.next()) {
                 double groceries = resultSet.getDouble("Groceries");
@@ -100,7 +102,7 @@ public class BudgetMapper extends DatabaseParent {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
-            preparedStatement = connection.prepareStatement("DELETE FROM MyBudgetApp.BudgetedItems WHERE UserId = ?");
+            preparedStatement = connection.prepareStatement("DELETE FROM My_BudgetApp.BudgetedItems WHERE UserId = ?");
             preparedStatement.setInt(1, user.getUserId());
             preparedStatement.execute();
             System.out.println("** Budget Deleted **");

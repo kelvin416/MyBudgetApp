@@ -56,6 +56,7 @@ public class UserService {
     public UserModel loginOrRegister() throws Exception {
         Scanner scanner = new Scanner(System.in);
         UserModel user;
+        System.out.println("Hello There Buddy");
         System.out.print("Are you a new user? (Y for Yes, N for No): ");
         String response = scanner.next();
 

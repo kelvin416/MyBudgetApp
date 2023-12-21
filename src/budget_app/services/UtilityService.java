@@ -8,7 +8,7 @@ public class UtilityService {
     Scanner scanner = new Scanner(System.in);
 
     public static void printApplicationTitle(){
-        System.out.println("Kelotich Budget App");
+        System.out.println("BudgetBuddy");
     }
 
     public static void printFarewell() {

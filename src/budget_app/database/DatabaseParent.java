@@ -9,7 +9,7 @@ public class DatabaseParent {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
-    static String connectionString = "jdbc:mysql://localhost/MyBudgetApp?"
-            + "user=root&password="
+    static String connectionString = "jdbc:mysql://localhost/My_BudgetApp?"
+            + "user=root&password=codingnomads"
             + "&useSSL=false&allowPublicKeyRetrieval=true";
 }

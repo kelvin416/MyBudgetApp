@@ -1,5 +1,7 @@
 package budget_app.model;
 
+
+//model is basicALLY POJOS
 public class BudgetAllocationModel {
     private double groceries;
     //housing will contain internet electricity, water and other maintenance;

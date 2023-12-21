@@ -13,7 +13,7 @@ public class UserMapper extends DatabaseParent {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
-            preparedStatement = connection.prepareStatement("INSERT INTO MyBudgetApp.User" +
+            preparedStatement = connection.prepareStatement("INSERT INTO My_BudgetApp.User" +
                     "(UserName, Amount) VALUES (?, ?)");
 
             preparedStatement.setString(1, user.getName());
@@ -30,7 +30,7 @@ public class UserMapper extends DatabaseParent {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
-            preparedStatement = connection.prepareStatement("SELECT UserId, UserName, Amount FROM MyBudgetApp.User WHERE Username = ?");
+            preparedStatement = connection.prepareStatement("SELECT UserId, UserName, Amount FROM My_BudgetApp.User WHERE Username = ?");
             preparedStatement.setString(1, uName);
             resultSet = preparedStatement.executeQuery();
             boolean couldLogin = false;
@@ -60,7 +60,7 @@ public class UserMapper extends DatabaseParent {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
-            preparedStatement = connection.prepareStatement("SELECT * FROM MyBudgetApp.User WHERE UserName = ? ORDER BY DateRegistered DESC LIMIT 1");
+            preparedStatement = connection.prepareStatement("SELECT * FROM My_BudgetApp.User WHERE UserName = ? ORDER BY DateRegistered DESC LIMIT 1");
             preparedStatement.setString(1, user.getName());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
@@ -87,7 +87,7 @@ public class UserMapper extends DatabaseParent {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
-            preparedStatement = connection.prepareStatement("UPDATE MyBudgetApp.User SET Amount = ? WHERE ( UserId = ? )");
+            preparedStatement = connection.prepareStatement("UPDATE My_BudgetApp.User SET Amount = ? WHERE ( UserId = ? )");
             preparedStatement.setDouble(1, user.getTotalBudgetAmount());
             preparedStatement.setInt(2, user.getUserId());
             preparedStatement.execute();
@@ -101,7 +101,7 @@ public class UserMapper extends DatabaseParent {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
-            preparedStatement = connection.prepareStatement("DELETE FROM MyBudgetApp.User WHERE UserId = ?");
+            preparedStatement = connection.prepareStatement("DELETE FROM My_BudgetApp.User WHERE UserId = ?");
             preparedStatement.setInt(1, user.getUserId());
             preparedStatement.execute();
             System.out.println("Account deletion was a success.");
@@ -115,7 +115,7 @@ public class UserMapper extends DatabaseParent {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(connectionString);
-            preparedStatement = connection.prepareStatement("SELECT UserId FROM MyBudgetApp.User WHERE UserName = ?");
+            preparedStatement = connection.prepareStatement("SELECT UserId FROM My_BudgetApp.User WHERE UserName = ?");
             preparedStatement.setString(1, name);
             resultSet = preparedStatement.executeQuery();
 
